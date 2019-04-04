@@ -1,0 +1,20 @@
+# Ignore everything
+*
+
+# Un-ignore everything with an extension
+!*.*
+
+# Unignore directories
+!*/
+
+# Un-ignore makefile
+!makefile
+
+# Ignore these
+.vscode/
+bin/
+obj/
+*.exe
+*.o
+*.out
+*.gch%     
