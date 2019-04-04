@@ -13,6 +13,8 @@ src: $(OBJ_SRC)
 %.o: %.cpp
 	$(CXX) $(CFLAGS) -c -o $@ $<
 
+.PHONY: clean
+
 clean: 
 	rm -rf $(shell find . -name "*.o")
 	rm -rf ./$(TARGET)

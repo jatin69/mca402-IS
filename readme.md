@@ -1,8 +1,15 @@
 # mca402 - Information Security
 
-## Ciphers todo
+Coursework for mca402-Information Security.
 
-- [ ] Caesar Cipher
-- [ ] Hill Cipher
-- [ ] DES
-- [ ] AES
+## How to run
+
+- go inside respective cipher folder
+- run `make` to build the executable
+- then use `make run` to execute
+
+## Folder structure
+
+- a separate folder for each new cipher
+- each folder has its own `makefile` and `readme`
+- `readme` contains output samples as well
