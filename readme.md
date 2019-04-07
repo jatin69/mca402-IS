@@ -2,14 +2,24 @@
 
 Coursework for mca402-Information Security.
 
+## Ciphers
+
+- [X] Caesar Cipher
+- [X] Hill Cipher
+- [ ] DES - ECB, CBC, CFB, OFB, CTR
+- [X] AES - ECB, CBC, CFB
+- [ ] RSA
+- [ ] DSA
+
 ## How to run
 
-- go inside respective cipher folder
-- run `make` to build the executable
-- then use `make run` to execute
+- `cd` to the respective cipher folder
+- `make` to build the executable                                                                    
+- `make run` to execute
 
 ## Folder structure
 
-- a separate folder for each new cipher
-- each folder has its own `makefile` and `readme`
-- `readme` contains output samples as well
+- A separate folder for each new cipher
+- Each folder has its own `readme file` and `makefile`
+- `readme file` may contain description, supported modes and output samples.
+- `makefile` contains make commands as per the repo

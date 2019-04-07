@@ -1,5 +1,13 @@
 # AES ( Advance Encryption Standard )
 
+## Supported Modes
+
+- [X] ECB ( Electronice Code Book )
+- [X] CBC ( Cipher Block Chaining )
+- [X] CFB ( Cipher Feedback Mode  )
+- [ ] OFB ( Output Feedback Mode  )
+- [ ] CTR ( Counter Feedback Mode )
+
 ## output
 
 ```

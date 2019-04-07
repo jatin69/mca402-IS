@@ -1,6 +1,6 @@
 /*
-Caesar cipher-
-linear shift by 3
+  Caesar cipher-
+  linear shift by 3
 */
 
 #include <cstring>

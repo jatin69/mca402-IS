@@ -1,5 +1,14 @@
 # DES
 
+
+## Supported Modes
+
+- [X] ECB ( Electronice Code Book )
+- [ ] CBC ( Cipher Block Chaining )
+- [ ] CFB ( Cipher Feedback Mode  )
+- [ ] OFB ( Output Feedback Mode  )
+- [ ] CTR ( Counter Feedback Mode )
+
 ## Output
 
 ```
