@@ -1,6 +1,6 @@
 CXX=g++
-CFLAGS=-std=c++11
-TARGET=des
+CFLAGS=-std=c++17
+TARGET=dsa
 
 INCLUDES=$(shell find ./src/ -name "*.hpp")
 SRC=$(shell find ./src/ -name "*.cpp")

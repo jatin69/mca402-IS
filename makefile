@@ -4,3 +4,4 @@ clean:
 	rm -rf ./hill-cipher/hill
 	rm -rf ./DES/des
 	rm -rf ./AES/aes
+	rm -rf ./RSA/rsa
