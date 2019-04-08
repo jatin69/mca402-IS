@@ -1,7 +1,7 @@
 #include "./des.hpp"
 
-char *Des::Encrypt(char *Text1) {
-  /* creating a copy to perform operations on */
+char* Des::mode_ECB_encrypt(char * Text1) {
+  
   char *Text = new char[1000];
   char *OmsgHEX = new char[1000];
   int Omsgi = -1;
@@ -17,16 +17,16 @@ char *Des::Encrypt(char *Text1) {
 
   int i, a1, j, nB, m, iB, k, K, B[8], n, t, d, round;
 
-  /* Encryption condition: message length should be multiple of eight(64 bits
-  * encypted at once),
-  *if not multiple of eight, 0 is appended to make it multiple of 8.
-  *for eg -
-  *let message length is 15. It can be divided into 2 message blocks (8+7), DES
-  * needs to be run 2 times.
-  *In second block 0 needs to be appended in the HEXA code of plaintext to make
-  *it
-  * multiple of 8.
-  */
+  /* 
+   * Encryption condition: message length should be multiple of eight(64 bits
+   * encypted at once),
+   * if not multiple of eight, 0 is appended to make it multiple of 8.
+   * for eg -
+   * let message length is 15. It can be divided into 2 message blocks (8+7), DES
+   * needs to be run 2 times.
+   * In second block 0 needs to be appended in the HEXA code of plaintext to make
+   * it multiple of 8.
+   */
   int messageBlocks = ceil(strlen(Text) / 8.0);
 
   /*
@@ -35,7 +35,7 @@ char *Des::Encrypt(char *Text1) {
   * The entire message is broken into groups of 8 characters,
   * then DES is RUN on those 8 characters.
   */
-  int encryptedMsgIndex = -1; // acts as index for final   encrypted message
+  int encryptedMsgIndex = -1; // acts as index for finalStr   encrypted message
   int msgIndex = -1;          // acts as index for initial plaintext message
   int binaryIndex;
   for (m = 0; m < messageBlocks; m++) {
@@ -77,58 +77,8 @@ char *Des::Encrypt(char *Text1) {
         OmsgHEX[++Omsgi] = (char)(sssk + 87);
       }
     }
-    /**/
 
-    /* Initial permutation
-     * Runs on the message, total[], to give IP
-     */
-    IP();
-    /* copying back updated contents from IP[] to total[] */
-    for (i = 0; i < 64; i++)
-      total[i] = ip[i];
-
-    /* IP is to L0 and R0*/
-    for (i = 0; i < 32; i++)
-      left[i] = total[i];
-    for (i = 32; i < 64; i++)
-      right[i - 32] = total[i];
-
-    /* 16 Cycles of DES
-     */
-    for (round = 1; round <= 16; round++) {
-      /* here, the drives are LEFT(n-1) and RIGHT(n-1) */
-      Expansion();     /** Convert 32-bit message to 48 bit message using E-bit
-                          Selection table  */
-      xor_oneE(round); /** Xor the expanded right half with key (48 bits XOR) */
-      substitution();  /** S-Box substitutions take place, result goes to sub[]
-                          */
-      permutation();   /**  permutates the result from S-Boxes substitution,
-                          result goes from sub[] to p[]*/
-
-      /* The drivers performs 'f' function & resultant is XORed with L(n-1) */
-      xor_two(); /** Performs XOR of Ln-1 and f(R(n-1), Kn) */
-      /* New Drive R(n) is ready to take the seat, currently resides in xor2[]*/
-
-      /* For the next iteration,
-       * New Drive L(n)= old Driver R(n-1)
-       */
-      for (i = 0; i < 32; i++)
-        left[i] = right[i];
-      /*
-       * New Driver R(n) comes and takes seat */
-      for (i = 0; i < 32; i++)
-        right[i] = xor2[i];
-    }
-
-    /* concatenate the final result from 16 cycles in the formation - R16,L16 */
-    for (i = 0; i < 32; i++)
-      temp[i] = right[i];
-    for (i = 32; i < 64; i++)
-      temp[i] = left[i - 32];
-
-    /* Applying the final permutation- inverseIP over temp[], result comes in
-     * inv[]*/
-    inverseIP();
+    encryptBlock();
 
     /* Converting Binary Matrix to HEX
      * Logic - consider 8 bits as two groups of 4-4 bits, then convert these 4
@@ -149,7 +99,6 @@ char *Des::Encrypt(char *Text1) {
         }
       }
     }
-    /* */
 
     /* Converting Binary Matrix to char
       * Logic - (7th bit *128)+(6th bit *64)+(5th bit *32)+ .... +(1st
@@ -166,23 +115,69 @@ char *Des::Encrypt(char *Text1) {
         k = k / 2;
       }
       // Ascii to char
-      final[++encryptedMsgIndex] = (char)d;
+      finalStr[++encryptedMsgIndex] = (char)d;
     }
   }
-  final[++encryptedMsgIndex] = '\0';
+  finalStr[++encryptedMsgIndex] = '\0';
 
   cout << "\nEncyption Key HEX  : 133457799bbcdff1";
   cout << "\nPlain  Text   HEX  : " << OmsgHEX;
   cout << "\nCipher Text   HEX  : " << EmsgHEX;
 
-  return final;
+  return finalStr;
 }
 
-/*
- * Xor the expanded right half with key (48 bits XOR)
- */
-void Des::xor_oneE(int round) {
-  for (int i = 0; i < 48; i++) {
-    xor1[i] = expansion[i] ^ keyi[round - 1][i];
+char *Des::mode_ECB_decrypt(char *Text1) {
+
+  int i, a1, j, nB, m, iB, k, K, B[8], n, t, d, round;
+
+  // generate all required keys - same as encryption
+  keygen();
+
+  // making copy for safety
+  char *Text = new char[1000];
+  strcpy(Text, Text1);
+
+  unsigned char ch;
+
+  // Unlike encryption, message will always be multiple of 8, as it comes to us
+  // after encryption
+  i = strlen(Text);
+  int mc = 0;
+
+  for (iB = 0, nB = 0, m = 0; m < (strlen(Text) / 8); m++) {
+    for (iB = 0, i = 0; i < 8; i++, nB++) {
+      ch = Text[nB];
+      n = (int)ch;
+      for (K = 7; n >= 1; K--) {
+        B[K] = n % 2;
+        n /= 2;
+      }
+      for (; K >= 0; K--)
+        B[K] = 0;
+      for (K = 0; K < 8; K++, iB++)
+        total[iB] = B[K];
+    }
+
+    decryptBlock();
+
+
+    for (i = 0; i < 8; i++) {
+      k = 128;
+      d = 0;
+      for (j = 0; j < 8; j++) {
+        d = d + inv[i][j] * k;
+        k = k / 2;
+      }
+      finalStr[mc++] = (char)d;
+    }
   }
+  finalStr[mc] = '\0';
+
+  char *final1 = new char[1000];
+  for (i = 0, j = strlen(Text); i < strlen(Text); i++, j++)
+    final1[i] = finalStr[j];
+  final1[i] = '\0';
+  return (finalStr);
+
 }

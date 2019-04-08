@@ -15,25 +15,40 @@ public:
       expansion[48], z[48], xor1[48], sub[32], p[32], xor2[32], temp[64],
       pc1[56], ip[64], inv[8][8];
 
-  char final[1000];
+  char finalStr[1000];
 
   void IP();
   void inverseIP();
 
-  void Expansion();
+  void expandMsg();
   void substitution();
   void permutation();
 
   void keygen();
-  void PermChoice1();
-  void PermChoice2();
+  void applyPC1();
+  void applyPC2();
 
-  char *Encrypt(char *);
-  char *Decrypt(char *);
+  void encryptBlock();
+  void decryptBlock();
 
-  void xor_two();
-  void xor_oneE(int);
-  void xor_oneD(int);
+  void xor_sides();
+  void xor_one_encryption(int);
+  void xor_one_decryption(int);
+
+  char* mode_ECB_encrypt(char *);
+  char* mode_ECB_decrypt(char *);
+
+  char* mode_CBC_encrypt(char *);
+  char* mode_CBC_decrypt(char *);
+  
+  char* mode_CFB_encrypt(char *);
+  char* mode_CFB_decrypt(char *);
+
+  char* mode_OFB_encrypt(char *);
+  char* mode_OFB_decrypt(char *);
+
+  char* mode_CTR_encrypt(char *);
+  char* mode_CTR_decrypt(char *);
 };
 
 #endif // !DES_SRC_DES_HPP

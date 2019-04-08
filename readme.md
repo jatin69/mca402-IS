@@ -8,7 +8,7 @@ Coursework for mca402-Information Security.
 - [X] Hill Cipher
 - [ ] DES - ECB, CBC, CFB, OFB, CTR
 - [X] AES - ECB, CBC, CFB
-- [ ] RSA
+- [X] RSA
 - [ ] DSA
 
 ## How to run

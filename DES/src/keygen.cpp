@@ -7,7 +7,7 @@ void Des::keygen() {
   /* PC-1 generated & applied.
       Converts 64 bit key to 56 bit key
       */
-  PermChoice1();
+  applyPC1();
 
   int i, j;
   // splitting into Left (Ck) and Right (Dk) Halves of 28-28 each
@@ -45,7 +45,7 @@ void Des::keygen() {
     /* applied permutation choice
             Converts 56 bit key to 48 bit key
             */
-    PermChoice2();
+    applyPC2();
 
     // Hold Kn of this cycle in Keyi array, round-1 to manage index
     for (i = 0; i < 48; i++)
@@ -58,7 +58,7 @@ Applied PC-1 to keys
 intelligently applied.
 stored to pc1
 */
-void Des::PermChoice1() {
+void Des::applyPC1() {
   int k = 57, i;
   for (i = 0; i < 28; i++) {
     pc1[i] = key[k - 1];
@@ -84,7 +84,7 @@ void Des::PermChoice1() {
 }
 
 /* Applies PC-2 to Key*/
-void Des::PermChoice2() {
+void Des::applyPC2() {
   int per[56], i, k;
   // concatenate CkDk to form 'per', then apply PC-2 to it
   for (i = 0; i < 28; i++)
