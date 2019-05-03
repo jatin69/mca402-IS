@@ -46,6 +46,8 @@ int main(){
   cout << "\n";
   runCustomTest(plainText, key);
   
+  cout << "Press Enter to exit ... ";
+  cin.ignore();
   return 0;
 }
 

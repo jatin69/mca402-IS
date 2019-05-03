@@ -46,6 +46,8 @@ int main() {
     cout << "\nEnter valid choice !! \n\n";
   }
 
+  cout << "Press Enter to exit ... ";
+  cin.ignore();
   return 0;
 }
 
