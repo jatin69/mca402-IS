@@ -14,7 +14,7 @@
 .vscode/
 bin/
 obj/
-*.exe
 *.o
 *.out
 *.gch%     
+submission/

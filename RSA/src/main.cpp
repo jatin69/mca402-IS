@@ -37,5 +37,7 @@ int main() {
     }
   }
 
+  cout << "Press Enter to exit ... ";
+  cin.ignore();
   return 0;
 }

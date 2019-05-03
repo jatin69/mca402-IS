@@ -1,5 +1,7 @@
 
 #include "./rsa.hpp"
+#include <iostream>
+#include <string>
 
 
 ulli cipher(ulli m, string s) {

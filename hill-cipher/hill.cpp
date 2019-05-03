@@ -14,6 +14,9 @@ int main() {
   getKeyMessage();
   encryption();
   decryption();
+  cout << "Press Enter to exit ... ";
+  cin.ignore();
+  return 0;
 }
 
 void encryption() {
